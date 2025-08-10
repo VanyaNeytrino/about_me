@@ -66,18 +66,19 @@
   .dot{ width:8px; height:8px; border-radius:50%; background:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,.18) }
   .budget.fail .dot{ background:#ef4444; box-shadow:0 0 0 3px rgba(239,68,68,.18) }
 
-  /* Реквизиты: максимально плотная, ровная сетка */
+  /* Реквизиты — центровка и компактность */
   .kv{ margin-top:10px }
-  .sep{ height:1px; background:#212734; margin:6px 0 } /* тонкая черта и минимальные отступы */
-
-  .kv-grid{
-    display:grid; grid-template-columns:max-content 1fr; gap:4px 10px; /* плотнее: меньше отступов */
-    align-items:center;
+  .sep{ height:1px; background:#212734; margin:6px 0 }
+  .kv-wrap{
+    display:flex; justify-content:center; /* центрируем весь блок */
   }
-  .kv-grid b{ color:#E7ECF5; font-size:14px; line-height:1; white-space:nowrap; margin:0 }
-  .kv-grid span{ color:#C8D2E3; font-size:14px; line-height:1; white-space:nowrap; margin:0 }
-
-  .small-note{ font-size:13px; color:#9AA6B2; white-space:nowrap; margin-top:4px }
+  .kv-grid{
+    display:grid; grid-template-columns: max-content max-content; /* узкие колонки */
+    gap:4px 12px; align-items:center;
+  }
+  .kv-grid b{ color:#E7ECF5; font-size:14px; line-height:1; white-space:nowrap; margin:0; text-align:right }
+  .kv-grid span{ color:#C8D2E3; font-size:14px; line-height:1; white-space:nowrap; margin:0; text-align:left }
+  .small-note{ font-size:13px; color:#9AA6B2; white-space:nowrap; margin-top:4px; text-align:center }
 
   @media (max-width:1180px){
     .card{ width:96vw; padding:24px }
@@ -132,9 +133,8 @@
               <li>JS ≤170KB gzip, CSS ≤50KB gzip, всего ≤300KB</li>
               <li>≤50 запросов; изображения WebP/AVIF</li>
             </ul>
-            <div class="budget" title="Пример статуса бюджета">
-              <span class="dot"></span>
-              <span>Бюджет пройден</span>
+            <div class="budget">
+              <span class="dot"></span><span>Бюджет пройден</span>
             </div>
           </div>
         </div>
@@ -330,7 +330,7 @@
       </div>
     </section>
 
-    <!-- 15. Контакты + реквизиты с минимальными отступами -->
+    <!-- 15. Контакты + реквизиты центрировано -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -345,11 +345,16 @@
 
         <div class="kv" aria-label="Реквизиты ИП">
           <div class="sep" aria-hidden="true"></div>
-          <div class="kv-grid">
-            <b>ИНН:</b><span>774335063941</span>
-            <b>ОГРНИП:</b><span>325774600247820</span>
-            <b>Дата регистрации:</b><span>15.04.2025</span>
+
+          <!-- Центрованный блок реквизитов -->
+          <div class="kv-wrap">
+            <div class="kv-grid">
+              <b>ИНН:</b><span>774335063941</span>
+              <b>ОГРНИП:</b><span>325774600247820</span>
+              <b>Дата регистрации:</b><span>15.04.2025</span>
+            </div>
           </div>
+
           <div class="sep" aria-hidden="true"></div>
           <div class="small-note">Основной вид деятельности: разработка компьютерного ПО</div>
         </div>
