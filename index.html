@@ -36,7 +36,7 @@
   .header{ margin-bottom:10px }
   h1{ font-weight:800; font-size:var(--h1); line-height:1.12; letter-spacing:-.01em; margin:0 }
   h2{ font-weight:800; font-size:var(--h2); line-height:1.12; letter-spacing:-.01em; margin:0 }
-  p{ margin:0; font-size:var(--body); color:var(--muted) }
+  p{ margin:0; font-size:var(--body); color:#9AA6B2 }
 
   /* Только оранжевые маркеры */
   .reveal section ul, .reveal section ol{ margin:12px 0 0; padding:0; list-style:none !important }
@@ -58,7 +58,6 @@
   .chip{ padding:6px 10px; border-radius:10px; font-size:13px; font-weight:600; color:#E7ECF5; background:#0F141C; border:1px solid rgba(255,255,255,.08) }
   .kpis{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px }
   .kpi{ background:#0F141C; border:1px solid rgba(255,255,255,.10); color:#E7ECF5; border-radius:10px; padding:7px 10px; font-size:14.5px; font-weight:700 }
-  .note{ font-size:14px; color:#96A3B7; margin-top:8px }
   .mono{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:var(--mono); color:#C8D2E3 }
   .slide-no{ position:absolute; right:16px; bottom:12px; font-size:12px; color:#8C9AB2; letter-spacing:.12em; font-weight:700 }
 
@@ -66,25 +65,44 @@
   .dot{ width:8px; height:8px; border-radius:50%; background:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,.18) }
   .budget.fail .dot{ background:#ef4444; box-shadow:0 0 0 3px rgba(239,68,68,.18) }
 
-  /* Реквизиты — центровка и компактность */
+  /* Реквизиты — центр и компактность */
   .kv{ margin-top:10px }
   .sep{ height:1px; background:#212734; margin:6px 0 }
-  .kv-wrap{
-    display:flex; justify-content:center; /* центрируем весь блок */
-  }
+  .kv-wrap{ display:flex; justify-content:center }
   .kv-grid{
-    display:grid; grid-template-columns: max-content max-content; /* узкие колонки */
+    display:grid; grid-template-columns:max-content max-content;
     gap:4px 12px; align-items:center;
   }
   .kv-grid b{ color:#E7ECF5; font-size:14px; line-height:1; white-space:nowrap; margin:0; text-align:right }
   .kv-grid span{ color:#C8D2E3; font-size:14px; line-height:1; white-space:nowrap; margin:0; text-align:left }
   .small-note{ font-size:13px; color:#9AA6B2; white-space:nowrap; margin-top:4px; text-align:center }
 
-  @media (max-width:1180px){
-    .card{ width:96vw; padding:24px }
-    .row{ grid-template-columns:1fr; gap:14px }
+  /* Мобильная адаптация */
+  @media (max-width: 820px){
+    .card{ width:92vw; padding:18px 16px; border-radius:12px }
+    h1{ font-size:24px } h2{ font-size:20px }
+    .reveal section li{ font-size:16px; line-height:1.38 }
+    .reveal section p{ font-size:16px; line-height:1.44 }
+    .row{ grid-template-columns:1fr; gap:10px }
+    .chips{ gap:6px } .chip{ font-size:12px; padding:5px 8px }
+    .kpis{ gap:6px } .kpi{ padding:6px 8px; font-size:12px }
+    .card .glow{ right:-70px; bottom:-70px; width:220px; height:220px; filter:blur(8px) }
+    .slide-no{ display:none }
+    .budget{ font-size:12px; padding:5px 8px } .dot{ width:7px; height:7px }
+    .kv{ margin-top:8px } .sep{ margin:6px 0 }
+    .kv-grid{ gap:4px 10px }
+    .kv-grid b, .kv-grid span{ font-size:13px }
   }
-  .reveal section p, .reveal section li{ overflow-wrap:anywhere }
+  @media (max-width: 380px){
+    .card{ width:96vw; padding:14px }
+    h1{ font-size:22px } h2{ font-size:18px }
+    .reveal section li, .reveal section p{ font-size:15px }
+    .card .glow{ right:-60px; bottom:-60px; width:190px; height:190px; filter:blur(7px) }
+  }
+  html, body{ overflow-x:hidden }
+  @media (prefers-reduced-motion: reduce){
+    .reveal .slides .fragment{ transition:none !important }
+  }
 </style>
 </head>
 <body>
@@ -133,9 +151,7 @@
               <li>JS ≤170KB gzip, CSS ≤50KB gzip, всего ≤300KB</li>
               <li>≤50 запросов; изображения WebP/AVIF</li>
             </ul>
-            <div class="budget">
-              <span class="dot"></span><span>Бюджет пройден</span>
-            </div>
+            <div class="budget"><span class="dot"></span><span>Бюджет пройден</span></div>
           </div>
         </div>
         <div class="slide-no">02</div>
@@ -171,7 +187,7 @@
       </div>
     </section>
 
-    <!-- 4. 9 pandas -->
+    <!-- 4 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -187,7 +203,7 @@
       </div>
     </section>
 
-    <!-- 5. TalentTech -->
+    <!-- 5 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -202,7 +218,7 @@
       </div>
     </section>
 
-    <!-- 6. Ифосистемы Джет -->
+    <!-- 6 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -216,7 +232,7 @@
       </div>
     </section>
 
-    <!-- 7. OverTeam -->
+    <!-- 7 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -229,7 +245,7 @@
       </div>
     </section>
 
-    <!-- 8. Premium IT -->
+    <!-- 8 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -242,7 +258,7 @@
       </div>
     </section>
 
-    <!-- 9. Рокетбанк -->
+    <!-- 9 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -256,7 +272,7 @@
       </div>
     </section>
 
-    <!-- 10. Рокетбанк: «Акция Дотация» -->
+    <!-- 10 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -272,7 +288,7 @@
       </div>
     </section>
 
-    <!-- 11. Evrone -->
+    <!-- 11 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -286,7 +302,7 @@
       </div>
     </section>
 
-    <!-- 12. Orange Media -->
+    <!-- 12 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -299,7 +315,7 @@
       </div>
     </section>
 
-    <!-- 13. EverWatch -->
+    <!-- 13 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -315,7 +331,7 @@
       </div>
     </section>
 
-    <!-- 14. Форматы -->
+    <!-- 14 -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -330,7 +346,7 @@
       </div>
     </section>
 
-    <!-- 15. Контакты + реквизиты центрировано -->
+    <!-- 15 Контакты -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -345,8 +361,6 @@
 
         <div class="kv" aria-label="Реквизиты ИП">
           <div class="sep" aria-hidden="true"></div>
-
-          <!-- Центрованный блок реквизитов -->
           <div class="kv-wrap">
             <div class="kv-grid">
               <b>ИНН:</b><span>774335063941</span>
@@ -354,7 +368,6 @@
               <b>Дата регистрации:</b><span>15.04.2025</span>
             </div>
           </div>
-
           <div class="sep" aria-hidden="true"></div>
           <div class="small-note">Основной вид деятельности: разработка компьютерного ПО</div>
         </div>
@@ -368,18 +381,33 @@
 
 <script src="https://unpkg.com/reveal.js@5/dist/reveal.js"></script>
 <script>
+  const isMobile = window.matchMedia('(max-width: 820px)').matches;
+
   Reveal.initialize({
     hash:true,
-    width:1280,
-    height:720,
-    margin:0.04,
+    width: isMobile ? 390 : 1280,
+    height: isMobile ? 844 : 720,
+    margin: isMobile ? 0.02 : 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
     transition:'fade',
     backgroundTransition:'fade',
-    slideNumber:'c/t',
+    slideNumber: isMobile ? false : 'c/t',
+    controls: true,
     controlsTutorial:false,
+    touch: true,
+    navigationMode: 'default',
     pdfSeparateFragments:true,
     pdfMaxPagesPerSlide:1
   });
+
+  if (isMobile) {
+    const controls = document.querySelector('.reveal .controls');
+    if (controls) {
+      controls.style.transform = 'scale(1.2)';
+      controls.style.bottom = '8px';
+    }
+  }
 </script>
 </body>
 </html>
