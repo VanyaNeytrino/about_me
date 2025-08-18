@@ -212,17 +212,21 @@
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
         <div class="header"><h2 class="fit-heading">EverWatch — аудит безопасности веб‑приложений</h2></div>
-        <div class="row">
+
+        <div class="row" style="align-items:start">
+          <!-- Левая колонка -->
           <div>
             <ul class="tight">
-              <li>Запуск 5 проверенных инструментов: OWASP ZAP, Nuclei, SQLMap, Nikto, Gobuster</li>
-              <li>Автоматическое сканирование: OWASP Top‑10, CVE, конфигурации, устаревшие версии ПО, скрытые пути/поддомены</li>
+              <li>Запуск 5 инструментов: OWASP ZAP, Nuclei, SQLMap, Nikto, Gobuster</li>
+              <li>Автоскан: OWASP Top‑10, CVE, конфигурации, устаревшие версии ПО, скрытые пути/поддомены</li>
               <li>Агрегация результатов в один отчёт: сводка и подробности по каждому инструменту</li>
               <li>ИИ‑постобработка: нормализация формулировок и рекомендации по устранению</li>
-              <li>Формат выдачи: детальный PDF‑отчёт для команды разработки</li>
+              <li>Выдача: детальный PDF‑отчёт для команды разработки</li>
             </ul>
           </div>
-          <div>
+
+          <!-- Правая колонка с защитой снизу/справа, чтобы текст не попадал под CTA и номер слайда -->
+          <div style="padding-right:96px; padding-bottom:28px">
             <p><b>Что получает заказчик:</b></p>
             <ul class="tight">
               <li>Цельный результат по итогам прогона нескольких сканеров</li>
@@ -233,15 +237,23 @@
           </div>
         </div>
 
-        <!-- Мини‑подпись справа внизу -->
-        <div style="
-          position:absolute; right:14px; bottom:10px;
-          font-size:13px; font-weight:700; color:#A9B6C4;
-          background:rgba(15,20,28,.65); border:1px solid rgba(255,255,255,.08);
-          padding:6px 10px; border-radius:10px; backdrop-filter:blur(2px);
-          ">
-          Подробнее: everwatch.tech →
-        </div>
+        <!-- Кнопка-CTA: фиксируем справа снизу, выше номера слайда -->
+        <a href="https://everwatch.tech/" target="_blank" rel="noopener noreferrer"
+          style="
+            position:absolute; right:46px; bottom:12px; z-index:2;
+            display:inline-flex; align-items:center; gap:8px;
+            padding:8px 12px; border-radius:12px;
+            background:rgba(34,40,52,.85);
+            color:#D9E7FF; font-weight:700; font-size:13px; text-decoration:none;
+            border:1px solid rgba(255,255,255,.12);
+            backdrop-filter: blur(2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,.22);
+          "
+          onmouseenter="this.style.background='rgba(46,54,70,.9)';"
+          onmouseleave="this.style.background='rgba(34,40,52,.85)';">
+          <span>Подробнее на everwatch.tech</span>
+          <span style="opacity:.9">→</span>
+        </a>
 
         <div class="slide-no">04</div>
       </div>
