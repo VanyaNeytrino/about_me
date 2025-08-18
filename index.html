@@ -11,21 +11,27 @@
 
 <style>
   :root{
+    /* Палитра и базовые переменные */
     --scene-1:#0B0F14; --scene-2:#101621;
-    --card:#141A22; --ink:#E7ECF5; --muted:#9AA6B2;
+    --card:#141A22; --ink:#F0F4FA; --muted:#A9B6C4;
     --accent:#FF6A00; --stroke:rgba(255,255,255,.08);
     --shadow:0 14px 46px rgba(0,0,0,.45); --radius:14px;
-    --h1:30px; --h2:24px; --body:17.5px; --mono:15px;
+
+    /* Fluid‑типографика: автоматически уменьшает кегли на мобильных */
+    --h1: clamp(22px, 4.6vw, 30px);
+    --h2: clamp(18px, 3.8vw, 24px);
+    --body: clamp(15px, 2.2vw, 17.5px);
+    --mono: clamp(13px, 1.9vw, 15px);
   }
 
-  body{ background:linear-gradient(180deg, var(--scene-1), var(--scene-2)); }
+  html, body{ overflow-x:hidden; background:linear-gradient(180deg, var(--scene-1), var(--scene-2)); }
   .reveal{ font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:#C8D2E3 }
   .reveal .slides section{ display:flex !important; align-items:center; justify-content:center; padding:0 !important }
 
   .card{
-    width:min(1120px,92vw); background:var(--card); color:var(--ink);
+    width:min(1120px,94vw); background:var(--card); color:var(--ink);
     border:1px solid var(--stroke); border-radius:var(--radius);
-    padding:32px 38px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+    padding:24px 26px; box-shadow:var(--shadow); position:relative; overflow:hidden;
   }
   .card .glow{
     position:absolute; right:-120px; bottom:-120px; width:420px; height:420px; border-radius:50%;
@@ -34,72 +40,64 @@
   }
 
   .header{ margin-bottom:10px }
-  h1{ font-weight:800; font-size:var(--h1); line-height:1.12; letter-spacing:-.01em; margin:0 }
-  h2{ font-weight:800; font-size:var(--h2); line-height:1.12; letter-spacing:-.01em; margin:0 }
-  p{ margin:0; font-size:var(--body); color:#9AA6B2 }
+  h1{ font-weight:800; font-size:var(--h1); line-height:1.15; letter-spacing:-.01em; margin:0; max-height:3.2em; overflow:hidden }
+  h2{ font-weight:800; font-size:var(--h2); line-height:1.15; letter-spacing:-.01em; margin:0; max-height:3.2em; overflow:hidden }
+  p{ margin:0; font-size:var(--body); color:var(--muted) }
 
-  /* Только оранжевые маркеры */
-  .reveal section ul, .reveal section ol{ margin:12px 0 0; padding:0; list-style:none !important }
+  /* Оранжевые маркеры и компактный список */
+  .reveal section ul, .reveal section ol{ margin:10px 0 0; padding:0; list-style:none !important }
   .reveal section li{ list-style:none !important }
   .reveal section li::marker{ content:"" }
   .reveal section li{
-    margin:6px 0; font-size:var(--body); line-height:1.32; color:var(--ink);
-    position:relative; padding-left:18px;
+    margin:4px 0; font-size:var(--body); line-height:1.32; color:var(--ink);
+    position:relative; padding-left:16px;
   }
   .reveal section li::before{
-    content:""; width:7px; height:7px; border-radius:50%;
-    background:var(--accent); position:absolute; left:0; top:.7em;
+    content:""; width:6px; height:6px; border-radius:50%;
+    background:var(--accent); position:absolute; left:0; top:.72em;
     box-shadow:0 0 0 3px rgba(255,106,0,.18);
   }
 
-  .row{ display:grid; grid-template-columns:1.15fr .85fr; gap:20px; align-items:start }
-  .tight li{ margin:5px 0 }
+  .row{ display:grid; grid-template-columns:1.15fr .85fr; gap:18px; align-items:start }
+  .tight li{ margin:4px 0 }
   .chips{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px }
   .chip{ padding:6px 10px; border-radius:10px; font-size:13px; font-weight:600; color:#E7ECF5; background:#0F141C; border:1px solid rgba(255,255,255,.08) }
-  .kpis{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px }
-  .kpi{ background:#0F141C; border:1px solid rgba(255,255,255,.10); color:#E7ECF5; border-radius:10px; padding:7px 10px; font-size:14.5px; font-weight:700 }
-  .mono{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:var(--mono); color:#C8D2E3 }
-  .slide-no{ position:absolute; right:16px; bottom:12px; font-size:12px; color:#8C9AB2; letter-spacing:.12em; font-weight:700 }
+  .kpis{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px }
+  .kpi{ background:#0F141C; border:1px solid rgba(255,255,255,.10); color:#E7ECF5; border-radius:10px; padding:6px 8px; font-size:13px; font-weight:700 }
+  .mono{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:var(--mono); color:#E7ECF5 }
+  .slide-no{ position:absolute; right:14px; bottom:10px; font-size:12px; color:#8C9AB2; letter-spacing:.12em; font-weight:700 }
 
   .budget{ display:flex; align-items:center; gap:8px; margin-top:10px; width:max-content; padding:6px 10px; border-radius:10px; font-size:14px; font-weight:700; background:#0F141C; border:1px solid rgba(255,255,255,.10); color:#E7ECF5 }
   .dot{ width:8px; height:8px; border-radius:50%; background:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,.18) }
   .budget.fail .dot{ background:#ef4444; box-shadow:0 0 0 3px rgba(239,68,68,.18) }
 
-  /* Реквизиты — центр и компактность */
+  /* Реквизиты */
   .kv{ margin-top:10px }
   .sep{ height:1px; background:#212734; margin:6px 0 }
   .kv-wrap{ display:flex; justify-content:center }
-  .kv-grid{
-    display:grid; grid-template-columns:max-content max-content;
-    gap:4px 12px; align-items:center;
-  }
+  .kv-grid{ display:grid; grid-template-columns:max-content max-content; gap:4px 12px; align-items:center }
   .kv-grid b{ color:#E7ECF5; font-size:14px; line-height:1; white-space:nowrap; margin:0; text-align:right }
   .kv-grid span{ color:#C8D2E3; font-size:14px; line-height:1; white-space:nowrap; margin:0; text-align:left }
   .small-note{ font-size:13px; color:#9AA6B2; white-space:nowrap; margin-top:4px; text-align:center }
 
-  /* Мобильная адаптация */
+  /* Мобильная адаптация — компактнее и без “огромных” заголовков */
   @media (max-width: 820px){
-    .card{ width:92vw; padding:18px 16px; border-radius:12px }
-    h1{ font-size:24px } h2{ font-size:20px }
-    .reveal section li{ font-size:16px; line-height:1.38 }
-    .reveal section p{ font-size:16px; line-height:1.44 }
-    .row{ grid-template-columns:1fr; gap:10px }
+    .card{ width:94vw; padding:16px 14px; border-radius:12px }
+    .row{ grid-template-columns:1fr; gap:8px }
     .chips{ gap:6px } .chip{ font-size:12px; padding:5px 8px }
-    .kpis{ gap:6px } .kpi{ padding:6px 8px; font-size:12px }
-    .card .glow{ right:-70px; bottom:-70px; width:220px; height:220px; filter:blur(8px) }
+    .kpis{ gap:6px } .kpi{ padding:5px 8px; font-size:12px }
+    .reveal section li, .reveal section p{ margin:4px 0 }
+    .card .glow{ right:-70px; bottom:-70px; width:200px; height:200px; filter:blur(8px) }
     .slide-no{ display:none }
-    .budget{ font-size:12px; padding:5px 8px } .dot{ width:7px; height:7px }
     .kv{ margin-top:8px } .sep{ margin:6px 0 }
     .kv-grid{ gap:4px 10px }
     .kv-grid b, .kv-grid span{ font-size:13px }
   }
   @media (max-width: 380px){
     .card{ width:96vw; padding:14px }
-    h1{ font-size:22px } h2{ font-size:18px }
-    .reveal section li, .reveal section p{ font-size:15px }
-    .card .glow{ right:-60px; bottom:-60px; width:190px; height:190px; filter:blur(7px) }
+    .card .glow{ right:-60px; bottom:-60px; width:180px; height:180px; filter:blur(7px) }
   }
-  html, body{ overflow-x:hidden }
+
   @media (prefers-reduced-motion: reduce){
     .reveal .slides .fragment{ transition:none !important }
   }
@@ -115,7 +113,7 @@
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
         <div class="header"><h1>Иван Яценко — Full‑Stack Engineer</h1></div>
-        <p>Ruby on Rails, Flutter, веб/бекенд/фронтенд, SaaS и мобильные приложения</p>
+        <p>Rails · Flutter · SaaS · Mobile · AI · Integrations</p>
         <div class="kpis">
           <div class="kpi">8+ лет продакшн</div>
           <div class="kpi">Москва · удалёнка/проекты</div>
@@ -129,23 +127,22 @@
       </div>
     </section>
 
-    <!-- 2. Что делаю + perf budgets -->
+    <!-- 2. Чем помогу бизнесу -->
     <section>
-      <div class="card" data-state="what-i-do">
+      <div class="card">
         <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>Что делаю</h2></div>
+        <div class="header"><h2>Чем помогу бизнесу</h2></div>
         <div class="row">
           <div>
             <ul class="tight">
-              <li class="fragment">Веб‑приложения и сайты: корпоративные, личные кабинеты, SEO‑фреймворк</li>
-              <li class="fragment">Backend/API: высоконагруженные сервисы, очереди, интеграции, миграции</li>
-              <li class="fragment">Frontend: React/Vue, дизайн‑системы, SSR/CSR, performance‑бюджеты</li>
-              <li class="fragment">SaaS: биллинг, роли/права, уведомления, отчётность, аудит событий</li>
-              <li class="fragment">Mobile: Flutter (iOS/Android), офлайн, пуши, публикация, CI/CD</li>
+              <li>Запускаю продукты: от идеи и дизайна до продакшна и поддержки</li>
+              <li>Снижаю риски: тесты, мониторинг, миграции без даунтайма</li>
+              <li>Ускоряю релизы: CI/CD, code review, декомпозиция задач</li>
+              <li>Беру перформанс под контроль: бюджеты и проверки в CI</li>
             </ul>
           </div>
-          <div class="fragment">
-            <p><b>Performance‑бюджеты:</b> ставлю лимиты и проверяю их в CI.</p>
+          <div>
+            <p><b>Performance‑бюджеты:</b></p>
             <ul class="tight">
               <li>LCP ≤2.5с, INP ≤200мс, TBT ≤200мс</li>
               <li>JS ≤170KB gzip, CSS ≤50KB gzip, всего ≤300KB</li>
@@ -158,7 +155,77 @@
       </div>
     </section>
 
-    <!-- 3. Технологии и подход -->
+    <!-- 3. Ключевые кейсы (сжатый опыт) -->
+    <section>
+      <div class="card">
+        <div class="glow" aria-hidden="true"></div>
+        <div class="header"><h2>Ключевые кейсы</h2></div>
+        <ul class="tight">
+          <li><b>9 pandas:</b> RoR backend спорт‑приложения + Flutter‑клиент. Контрактный API, RBAC, кэш → быстрый выпуск фич и стабильный TTM.</li>
+          <li><b>TalentTech:</b> очереди/ретраи, идемпотентность; поиск на ElasticSearch → устойчивые интеграции и быстрый полнотекстовый поиск.</li>
+          <li><b>Инфосистемы Джет:</b> профилирование, индексы, устранение N+1 → меньше инцидентов и предсказуемые релизы.</li>
+          <li><b>Рокетбанк:</b> промо‑механики, RabbitMQ, вынос логики в сервис → масштабирование под пики без деградации.</li>
+        </ul>
+        <div class="slide-no">03</div>
+      </div>
+    </section>
+
+    <!-- 4. EverWatch — промо стартапа -->
+    <section>
+      <div class="card">
+        <div class="glow" aria-hidden="true"></div>
+        <div class="header"><h2>EverWatch — аудит безопасности</h2></div>
+        <div class="row">
+          <div>
+            <ul class="tight">
+              <li>Единая платформа: собирает результаты сканеров, нормализует и убирает дубли</li>
+              <li>Приоритезация по CVSS + контекст активов, SLA по критичностям</li>
+              <li>AI‑отчёты: понятные версии для бизнеса и техкоманды</li>
+              <li>Интеграции: SSO, роли/права, REST API, алерты Slack/Email</li>
+            </ul>
+          </div>
+          <div>
+            <p><b>Бизнес‑ценность:</b></p>
+            <ul class="tight">
+              <li>–30–50% времени на обработку уязвимостей</li>
+              <li>Прозрачные метрики и выполнение SLA</li>
+              <li>Снижение затрат на внешние аудиты за счёт повторного тестирования</li>
+              <li>Быстрый старт: подключение ваших сканеров за 1–3 дня</li>
+            </ul>
+          </div>
+        </div>
+        <div class="slide-no">04</div>
+      </div>
+    </section>
+
+    <!-- 5. Услуги -->
+    <section>
+      <div class="card">
+        <div class="glow" aria-hidden="true"></div>
+        <div class="header"><h2>Услуги</h2></div>
+        <div class="row">
+          <div>
+            <ul class="tight">
+              <li><b>Веб/сайты:</b> корпоративные, личные кабинеты, SEO‑фреймворк</li>
+              <li><b>Backend/API:</b> высоконагруженные сервисы, очереди, интеграции, биллинг</li>
+              <li><b>Frontend:</b> React/Vue, дизайн‑системы, SSR/CSR, perf‑бюджеты</li>
+              <li><b>SaaS:</b> роли/права, подписки, уведомления, отчётность, аудит событий</li>
+            </ul>
+          </div>
+          <div>
+            <ul class="tight">
+              <li><b>Mobile:</b> Flutter (iOS/Android), офлайн, пуши, публикация, CI</li>
+              <li><b>Desktop:</b> Flutter/Tauri — кроссплатформенные клиенты</li>
+              <li><b>AI:</b> RAG/векторный поиск, генерация отчётов, модерация/анти‑спам</li>
+              <li><b>Блокчейн:</b> Solana/Anchor, кошельки, Web3‑интеграции</li>
+            </ul>
+          </div>
+        </div>
+        <div class="slide-no">05</div>
+      </div>
+    </section>
+
+    <!-- 6. Технологии и подход -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -166,192 +233,47 @@
         <div class="row">
           <div>
             <ul class="tight">
-              <li>Ruby, Rails, Sinatra, RSpec</li>
-              <li>PostgreSQL, MySQL, Redis, ElasticSearch</li>
+              <li>Ruby, Rails, RSpec; Sinatra</li>
+              <li>PostgreSQL, Redis, ElasticSearch</li>
               <li>Linux, Nginx, Docker, CI/CD, GitHub Actions</li>
-              <li>HTML/CSS/SCSS, Bootstrap, Tailwind (по необходимости)</li>
-              <li>Flutter/Dart, RabbitMQ</li>
+              <li>Flutter/Dart, HTML/CSS/SCSS</li>
+              <li>RabbitMQ, интеграции, веб‑хуки</li>
             </ul>
           </div>
           <div>
             <ul class="tight">
-              <li>SOLID, модульная архитектура, BFF/микросервисы по месту</li>
+              <li>Модульная архитектура, BFF/микросервисы по месту</li>
               <li>TDD/coverage, code review, миграции без даунтайма</li>
               <li>Наблюдаемость: логи, трейсинг, метрики, SLO/SLA</li>
-              <li>Безопасность: секреты, least privilege, обновления</li>
+              <li>Безопасность: секреты, least privilege, регулярные обновления</li>
               <li>Perf: профилирование, кэш, индексы, N+1, rate‑limit</li>
             </ul>
           </div>
         </div>
-        <div class="slide-no">03</div>
-      </div>
-    </section>
-
-    <!-- 4 -->
-    <section>
-      <div class="card">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>9 pandas — RoR + Flutter</h2></div>
-        <ul class="tight">
-          <li>Backend спортивного приложения: контрактный REST API, версияция, RBAC, кэширование</li>
-          <li>Модуль контента/stories: схемы данных, админские флоу, медиахранилище</li>
-          <li>Тесты RSpec, линтеры, ревью, релизные чек‑листы</li>
-          <li>«Динамо» (Flutter): синхронизация, навигация, UI‑экраны, мультимедиа, авторизация</li>
-          <li>Итог: быстрый выпуск фич, стабильный API, меньший time‑to‑market</li>
-        </ul>
-        <div class="slide-no">04</div>
-      </div>
-    </section>
-
-    <!-- 5 -->
-    <section>
-      <div class="card">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>TalentTech — Senior RoR</h2></div>
-        <ul class="tight">
-          <li>Интеграции: очереди/ретраи, идемпотентность, дедубликация событий</li>
-          <li>Поиск: ElasticSearch — мэппинги, релевантность, агрегации, индексы</li>
-          <li>Стабильность: метрики, алерты, отложенные миграции, оптимизация запросов</li>
-          <li>Итог: устойчивые интеграции и быстрый полнотекстовый поиск</li>
-        </ul>
-        <div class="slide-no">05</div>
-      </div>
-    </section>
-
-    <!-- 6 -->
-    <section>
-      <div class="card">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>Ифосистемы Джет — RoR</h2></div>
-        <ul class="tight">
-          <li>Профилирование, устранение N+1, индексация БД, оптимизация кешей</li>
-          <li>Фиксы багов, тестирование, рефакторинг сложных модулей</li>
-          <li>Итог: меньше инцидентов, предсказуемые релизы</li>
-        </ul>
         <div class="slide-no">06</div>
       </div>
     </section>
 
-    <!-- 7 -->
-    <section>
-      <div class="card">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>OverTeam — RoR</h2></div>
-        <ul class="tight">
-          <li>sanatory.ru: выделение доменов, unit/integration‑тесты, стабилизация</li>
-          <li>Итог: рост надёжности и скорости разработки</li>
-        </ul>
-        <div class="slide-no">07</div>
-      </div>
-    </section>
-
-    <!-- 8 -->
-    <section>
-      <div class="card">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>Premium IT Solutions — RoR</h2></div>
-        <ul class="tight">
-          <li>Оценка/постановка задач, декомпозиция, менторство джуна</li>
-          <li>Итог: ниже bus‑factor, прозрачные планы, точнее сроки</li>
-        </ul>
-        <div class="slide-no">08</div>
-      </div>
-    </section>
-
-    <!-- 9 -->
-    <section>
-      <div class="card">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>Рокетбанк — RoR</h2></div>
-        <ul class="tight">
-          <li>Промо‑механики: контрактные API, фичефлаги, конфигурируемые сценарии</li>
-          <li>RabbitMQ: очереди, ретраи, мониторинг, dead‑letter</li>
-          <li>Сервис‑изация: вынос промо‑логики для масштабирования</li>
-        </ul>
-        <div class="slide-no">09</div>
-      </div>
-    </section>
-
-    <!-- 10 -->
-    <section>
-      <div class="card">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>Кейс Рокетбанк — «Акция Дотация»</h2></div>
-        <ul class="tight">
-          <li class="fragment"><b>Что это:</b> маркетинговая акция привлечения/активации пользователей с начислением бонусов (рокетрубли/«стим‑рубли») вместо прямых денег; компенсация доступна при достижении порога (напр., от 3,000 бонусов).</li>
-          <li class="fragment"><b>Backend‑логика:</b> расчёт дотаций по правилам, окна активации, лимиты/квоты, фичефлаги, защита от дублей.</li>
-          <li class="fragment"><b>Интеграции:</b> платёжные провайдеры, антифрод, идемпотентные коллбеки, аудит событий.</li>
-          <li class="fragment"><b>Аналитика:</b> событийная модель (шаги/статусы/конверсии), ретраи, метрики и алерты.</li>
-          <li class="fragment"><b>Итог:</b> стабильное проведение под пиковые нагрузки и быстрые итерации механик.</li>
-        </ul>
-        <div class="slide-no">10</div>
-      </div>
-    </section>
-
-    <!-- 11 -->
-    <section>
-      <div class="card">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>Evrone — RoR</h2></div>
-        <ul class="tight">
-          <li>5 проектов: btc‑trading, Ivzo, PlusOne, RubyChallenge, DomaDom</li>
-          <li>Анти‑бот защита: Nginx rate‑limit, капчи, лимиты попыток, алерты</li>
-          <li>Интеграции: SSL, Redis, ES; работа с блокировками в БД</li>
-        </ul>
-        <div class="slide-no">11</div>
-      </div>
-    </section>
-
-    <!-- 12 -->
-    <section>
-      <div class="card">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>Orange Media — RoR</h2></div>
-        <ul class="tight">
-          <li>ЛК трейдеров AMarkets: платёжные флоу, уведомления, интеграции</li>
-          <li>RBKMoney при ограничениях РКН: резервные маршруты, устойчивость</li>
-        </ul>
-        <div class="slide-no">12</div>
-      </div>
-    </section>
-
-    <!-- 13 -->
-    <section>
-      <div class="card">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="header"><h2>EverWatch — аудит безопасности</h2></div>
-        <ul class="tight">
-          <li>Оркестрация проверок: сбор сканеров, нормализация, дедупликация</li>
-          <li>Приоритезация рисков: CVSS, контекст активов, эксплуатируемость, SLA</li>
-          <li>Роль: архитектура, backend на Ruby, интеграции, дашборд</li>
-          <li><b>ИИ‑отчёты:</b> генерация понятных отчётов с описанием проблем, шагами воспроизведения и рекомендациями по фиксам (версии для бизнеса и техкоманды)</li>
-          <li>План: CI/CD‑интеграции, алерты, auto‑retest, внешнее API</li>
-        </ul>
-        <div class="slide-no">13</div>
-      </div>
-    </section>
-
-    <!-- 14 -->
+    <!-- 7. Форматы сотрудничества -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
         <div class="header"><h2>Форматы сотрудничества</h2></div>
         <ul class="tight">
-          <li>Проектная разработка: MVP → пилот → масштаб (контрольные метрики)</li>
+          <li>Проекты под ключ: MVP → пилот → масштаб (контрольные метрики)</li>
           <li>T&M / Retainer: усиление команды, ускорение релизов, устранение узких мест</li>
           <li>Аудит/Rescue: перфоманс, безопасность, инциденты, план стабилизации</li>
-          <li>Документы: договор, акты, отчёты по спринтам, SLA</li>
+          <li>Документы: договор, акты, отчёты по спринтам, SLA. ИП, безнал.</li>
         </ul>
-        <div class="slide-no">14</div>
+        <div class="slide-no">07</div>
       </div>
     </section>
 
-    <!-- 15 Контакты -->
+    <!-- 8. Контакты -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
         <div class="header"><h2>Контакты</h2></div>
-
         <ul class="tight">
           <li>Иван Яценко, ИП</li>
           <li class="mono">vanya.neytrino@yandex.ru</li>
@@ -372,7 +294,7 @@
           <div class="small-note">Основной вид деятельности: разработка компьютерного ПО</div>
         </div>
 
-        <div class="slide-no">15</div>
+        <div class="slide-no">08</div>
       </div>
     </section>
 
@@ -385,8 +307,8 @@
 
   Reveal.initialize({
     hash:true,
-    width: isMobile ? 390 : 1280,
-    height: isMobile ? 844 : 720,
+    width: isMobile ? 414 : 1280,      // шире, чем 390, чтобы избежать переполнения на iPhone 12–15
+    height: isMobile ? 780 : 720,      // чуть ниже, чтобы строки не «прыгали»
     margin: isMobile ? 0.02 : 0.04,
     minScale: 0.2,
     maxScale: 2.0,
@@ -404,8 +326,8 @@
   if (isMobile) {
     const controls = document.querySelector('.reveal .controls');
     if (controls) {
-      controls.style.transform = 'scale(1.2)';
-      controls.style.bottom = '8px';
+      controls.style.transform = 'scale(1.15)';
+      controls.style.bottom = '6px';
     }
   }
 </script>
