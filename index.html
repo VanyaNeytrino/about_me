@@ -17,19 +17,40 @@
     --accent:#FF6A00; --stroke:rgba(255,255,255,.08);
     --shadow:0 14px 46px rgba(0,0,0,.45); --radius:14px;
 
-    /* Базовые fluid‑кегли: верхняя граница = десктоп, нижняя = маленькие смартфоны */
-    --h1: clamp(22px, 6.2vw, 48px);     /* было 30px — увеличили верх для десктопа, расширили низ для мобил */
+    /* Fluid‑кегли */
+    --h1: clamp(22px, 6.2vw, 48px);
     --h2: clamp(18px, 4.4vw, 32px);
     --body: clamp(15px, 2.1vw, 18px);
     --mono: clamp(13px, 1.9vw, 16px);
 
-    /* Ограничения ширины текста внутри карточки */
     --content-max: 1040px;
   }
 
-  html, body{ overflow-x:hidden; background:linear-gradient(180deg, var(--scene-1), var(--scene-2)); }
-  .reveal{ font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:#C8D2E3 }
+  html, body{
+    overflow-x:hidden;
+    background:linear-gradient(180deg, var(--scene-1), var(--scene-2));
+  }
 
+  /* ВЫРАВНИВАНИЕ ПО ЦЕНТРУ НА ДЕСКТОПЕ
+     У Reveal внутренний контейнер .slides — абсолютного позиционирования.
+     Чтобы карточки всегда оказывались по центру экрана, используем grid‑центрирование
+     для области слайдов на ширине >= 1024px. */
+  @media (min-width: 1024px){
+    .reveal .slides{
+      width:100% !important;
+      height:100% !important;
+      left:0 !important; top:0 !important;
+      display:grid !important;
+      place-items:center !important; /* центр и по горизонтали, и по вертикали */
+      transform:none !important;      /* отменяем сдвиги, которые могли появиться */
+    }
+  }
+
+  .reveal{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:#C8D2E3;
+  }
+  /* Не трогаем .reveal/.slides на мобиле; стилизуем только section */
   .reveal .slides section{
     display:flex; align-items:center; justify-content:center; padding:0 !important;
   }
@@ -39,6 +60,7 @@
     background:var(--card); color:var(--ink);
     border:1px solid var(--stroke); border-radius:var(--radius);
     padding:28px 30px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+    margin:0 auto; /* дополнительная страховка от левого прилипания */
   }
   .card .glow{
     position:absolute; right:-120px; bottom:-120px; width:420px; height:420px; border-radius:50%;
@@ -52,14 +74,7 @@
   h2{ font-size:var(--h2) }
   p{ margin:0; font-size:var(--body); color:var(--muted) }
 
-  /* Автоподгон заголовков: не даём обрезаться, равномерно уменьшаем кегль при переполнении */
-  .fit-heading{
-    display:block;
-    max-width:100%;
-    line-height:1.05;
-    word-break:keep-all;
-    hyphens:auto;
-  }
+  .fit-heading{ display:block; max-width:100%; line-height:1.05; word-break:keep-all; hyphens:auto }
 
   .reveal section ul, .reveal section ol{ margin:10px 0 0; padding:0; list-style:none }
   .reveal section li{
@@ -93,7 +108,7 @@
   .kv-grid span{ color:#C8D2E3; font-size:14px; line-height:1; white-space:nowrap; margin:0; text-align:left }
   .small-note{ font-size:13px; color:#9AA6B2; white-space:nowrap; margin-top:4px; text-align:center }
 
-  /* Универсальные мобильные брейкпоинты — ширины 414, 390, 375, 360 */
+  /* Мобайл (оставляем как было — у тебя хорошо смотрится на iPhone 15 Pro) */
   @media (max-width: 920px){ :root{ --content-max: 860px } }
   @media (max-width: 820px){
     .card{ width:94vw; padding:16px 14px; border-radius:12px }
@@ -133,7 +148,6 @@
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
         <div class="header">
-          <!-- fit-heading включён -->
           <h1 class="fit-heading">Иван Яценко — Full‑Stack Engineer</h1>
         </div>
         <p>Rails · Flutter · SaaS · Mobile · AI · Integrations</p>
@@ -326,19 +340,15 @@
 
 <script src="https://unpkg.com/reveal.js@5/dist/reveal.js" defer></script>
 <script>
-  // Инициализация Reveal + автоподгон заголовков
   window.addEventListener('DOMContentLoaded', () => {
     const isMobile = window.matchMedia('(max-width: 820px)').matches;
 
     if (window.Reveal && typeof Reveal.initialize === 'function') {
       Reveal.initialize({
         hash:true,
-        /* Подобрано под популярные смартфоны:
-           414×896 (iPhone 11/12/13/14/15), 390×844 (12/13/14/15), 375×812 (X/XS/11Pro),
-           360×800 (часть Android). */
         width:  isMobile ? Math.min(window.innerWidth, 414) : 1280,
         height: isMobile ? 800 : 720,
-        margin: isMobile ? 0.02 : 0.04,
+        margin: isMobile ? 0.02 : 0.06, // немного больше отступ на десктопе, чтобы центр выглядел «воздушно»
         minScale: 0.2,
         maxScale: 2.0,
         transition:'fade',
@@ -353,39 +363,25 @@
       });
     }
 
-    // Функция автоподгона: уменьшает кегль h1/h2, если строчки выходят за карточку
-    function fitAllHeadings(){
-      document.querySelectorAll('.fit-heading').forEach(fitHeading);
-    }
+    // Автоподгон заголовков под карточку (чтобы слово ENGINEER не обрезалось)
+    function fitAllHeadings(){ document.querySelectorAll('.fit-heading').forEach(fitHeading); }
     function fitHeading(el){
-      const card = el.closest('.card');
-      if (!card) return;
-
-      // Максимальный кегль берём из вычисленного стиля (clamp верхнее значение)
-      const style = getComputedStyle(el);
-      const maxFont = parseFloat(style.fontSize);
-      let font = maxFont;
-
-      // Порог — заголовок должен влезать в 2.8 строки по высоте карточки
-      const maxHeight = Math.min(card.clientHeight * 0.28, 220); // ограничитель для десктопа
-
-      // Бинарный поиск кегля для скорости
+      const card = el.closest('.card'); if (!card) return;
+      const maxFont = parseFloat(getComputedStyle(el).fontSize);
       let low = 12, high = maxFont, best = maxFont;
+      const maxHeight = Math.min(card.clientHeight * 0.28, 220);
       for (let i=0;i<16;i++){
         const mid = (low+high)/2;
         el.style.fontSize = mid + 'px';
-        // измеряем с запасом
         const ok = el.scrollWidth <= card.clientWidth - 24 && el.scrollHeight <= maxHeight;
         if (ok){ best = mid; low = mid; } else { high = mid; }
       }
       el.style.fontSize = Math.floor(best) + 'px';
     }
-
     const ro = new ResizeObserver(() => fitAllHeadings());
     ro.observe(document.documentElement);
     fitAllHeadings();
 
-    // Тюнинг контролов на мобилке
     if (isMobile) {
       const controls = document.querySelector('.reveal .controls');
       if (controls){
