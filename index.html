@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Иван Яценко — Самопрезентация</title>
 
+<!-- Reveal CSS -->
 <link rel="stylesheet" href="https://unpkg.com/reveal.js@5/dist/reveal.css">
 <link rel="stylesheet" href="https://unpkg.com/reveal.js@5/dist/theme/black.css" id="theme">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
   :root{
-    /* Палитра и базовые переменные */
+    /* Цвета и базовые токены */
     --scene-1:#0B0F14; --scene-2:#101621;
     --card:#141A22; --ink:#F0F4FA; --muted:#A9B6C4;
     --accent:#FF6A00; --stroke:rgba(255,255,255,.08);
     --shadow:0 14px 46px rgba(0,0,0,.45); --radius:14px;
 
-    /* Fluid‑типографика: автоматически уменьшает кегли на мобильных */
+    /* Fluid‑типографика для мобильных */
     --h1: clamp(22px, 4.6vw, 30px);
     --h2: clamp(18px, 3.8vw, 24px);
     --body: clamp(15px, 2.2vw, 17.5px);
@@ -26,7 +27,10 @@
 
   html, body{ overflow-x:hidden; background:linear-gradient(180deg, var(--scene-1), var(--scene-2)); }
   .reveal{ font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:#C8D2E3 }
-  .reveal .slides section{ display:flex !important; align-items:center; justify-content:center; padding:0 !important }
+  /* ВАЖНО: не трогаем .reveal и .slides, оформляем только section */
+  .reveal .slides section{
+    display:flex; align-items:center; justify-content:center; padding:0 !important;
+  }
 
   .card{
     width:min(1120px,94vw); background:var(--card); color:var(--ink);
@@ -44,10 +48,8 @@
   h2{ font-weight:800; font-size:var(--h2); line-height:1.15; letter-spacing:-.01em; margin:0; max-height:3.2em; overflow:hidden }
   p{ margin:0; font-size:var(--body); color:var(--muted) }
 
-  /* Оранжевые маркеры и компактный список */
-  .reveal section ul, .reveal section ol{ margin:10px 0 0; padding:0; list-style:none !important }
-  .reveal section li{ list-style:none !important }
-  .reveal section li::marker{ content:"" }
+  /* Оранжевые маркеры и компактные списки */
+  .reveal section ul, .reveal section ol{ margin:10px 0 0; padding:0; list-style:none }
   .reveal section li{
     margin:4px 0; font-size:var(--body); line-height:1.32; color:var(--ink);
     position:relative; padding-left:16px;
@@ -80,7 +82,7 @@
   .kv-grid span{ color:#C8D2E3; font-size:14px; line-height:1; white-space:nowrap; margin:0; text-align:left }
   .small-note{ font-size:13px; color:#9AA6B2; white-space:nowrap; margin-top:4px; text-align:center }
 
-  /* Мобильная адаптация — компактнее и без “огромных” заголовков */
+  /* Мобильная адаптация */
   @media (max-width: 820px){
     .card{ width:94vw; padding:16px 14px; border-radius:12px }
     .row{ grid-template-columns:1fr; gap:8px }
@@ -137,8 +139,8 @@
             <ul class="tight">
               <li>Запускаю продукты: от идеи и дизайна до продакшна и поддержки</li>
               <li>Снижаю риски: тесты, мониторинг, миграции без даунтайма</li>
-              <li>Ускоряю релизы: CI/CD, code review, декомпозиция задач</li>
-              <li>Беру перформанс под контроль: бюджеты и проверки в CI</li>
+              <li>Ускоряю релизы: CI/CD, code review, декомпозиция</li>
+              <li>Перформанс под контролем: бюджеты и проверки в CI</li>
             </ul>
           </div>
           <div>
@@ -155,7 +157,7 @@
       </div>
     </section>
 
-    <!-- 3. Ключевые кейсы (сжатый опыт) -->
+    <!-- 3. Ключевые кейсы -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -170,7 +172,7 @@
       </div>
     </section>
 
-    <!-- 4. EverWatch — промо стартапа -->
+    <!-- 4. EverWatch -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -216,7 +218,7 @@
             <ul class="tight">
               <li><b>Mobile:</b> Flutter (iOS/Android), офлайн, пуши, публикация, CI</li>
               <li><b>Desktop:</b> Flutter/Tauri — кроссплатформенные клиенты</li>
-              <li><b>AI:</b> RAG/векторный поиск, генерация отчётов, модерация/анти‑спам</li>
+              <li><b>AI:</b> RAG/векторный поиск, генерация отчётов, модерация</li>
               <li><b>Блокчейн:</b> Solana/Anchor, кошельки, Web3‑интеграции</li>
             </ul>
           </div>
@@ -225,7 +227,7 @@
       </div>
     </section>
 
-    <!-- 6. Технологии и подход -->
+    <!-- 6. Стек и подход -->
     <section>
       <div class="card">
         <div class="glow" aria-hidden="true"></div>
@@ -301,35 +303,46 @@
   </div>
 </div>
 
-<script src="https://unpkg.com/reveal.js@5/dist/reveal.js"></script>
+<!-- Reveal JS с defer -->
+<script src="https://unpkg.com/reveal.js@5/dist/reveal.js" defer></script>
 <script>
-  const isMobile = window.matchMedia('(max-width: 820px)').matches;
+  // Инициализируем только когда DOM и скрипт готовы
+  window.addEventListener('DOMContentLoaded', () => {
+    const isMobile = window.matchMedia('(max-width: 820px)').matches;
 
-  Reveal.initialize({
-    hash:true,
-    width: isMobile ? 414 : 1280,      // шире, чем 390, чтобы избежать переполнения на iPhone 12–15
-    height: isMobile ? 780 : 720,      // чуть ниже, чтобы строки не «прыгали»
-    margin: isMobile ? 0.02 : 0.04,
-    minScale: 0.2,
-    maxScale: 2.0,
-    transition:'fade',
-    backgroundTransition:'fade',
-    slideNumber: isMobile ? false : 'c/t',
-    controls: true,
-    controlsTutorial:false,
-    touch: true,
-    navigationMode: 'default',
-    pdfSeparateFragments:true,
-    pdfMaxPagesPerSlide:1
-  });
+    // Безопасная инициализация (проверка существования)
+    if (window.Reveal && typeof Reveal.initialize === 'function') {
+      Reveal.initialize({
+        hash:true,
+        width: isMobile ? 414 : 1280,   // 414 шире 390 — лучше влезают строки на iPhone
+        height: isMobile ? 780 : 720,   // немного ниже — меньше перепрыгиваний
+        margin: isMobile ? 0.02 : 0.04,
+        minScale: 0.2,
+        maxScale: 2.0,
+        transition:'fade',
+        backgroundTransition:'fade',
+        slideNumber: isMobile ? false : 'c/t',
+        controls: true,
+        controlsTutorial:false,
+        touch: true,
+        navigationMode: 'default',
+        pdfSeparateFragments:true,
+        pdfMaxPagesPerSlide:1
+      });
 
-  if (isMobile) {
-    const controls = document.querySelector('.reveal .controls');
-    if (controls) {
-      controls.style.transform = 'scale(1.15)';
-      controls.style.bottom = '6px';
+      // Тюним контролы на мобиле
+      if (isMobile) {
+        const controls = document.querySelector('.reveal .controls');
+        if (controls){
+          controls.style.transform = 'scale(1.15)';
+          controls.style.bottom = '6px';
+        }
+      }
+    } else {
+      // На всякий случай лог в консоль, если CDN не загрузился
+      console.error('Reveal.js не загрузился. Проверь подключение CDN.');
     }
-  }
+  });
 </script>
 </body>
 </html>
